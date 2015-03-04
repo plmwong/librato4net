@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("librato4net")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Send metrics to Librato from your .NET application")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Phillip Wong")]
 [assembly: AssemblyProduct("librato4net")]
 [assembly: AssemblyCopyright("Copyright © Phillip Wong 2015")]
 [assembly: AssemblyTrademark("")]
