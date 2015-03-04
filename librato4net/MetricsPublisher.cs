@@ -6,9 +6,10 @@ namespace librato4net
     {
         private static MetricsPublisher _publisher;
 
-        public static void Initialise()
+        public static void Start()
         {
-			_publisher = new LibratoMetricsPublisher(new LibratoClient());
+			var client = new LibratoBufferingClient(new LibratoClient());
+			_publisher = new LibratoMetricsPublisher(client);
         }
 
         public static MetricsPublisher Current

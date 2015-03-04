@@ -48,6 +48,7 @@
     <Compile Include="Metrics\Counter.cs" />
     <Compile Include="Metrics\Measurement.cs" />
     <Compile Include="Metrics\Metric.cs" />
+    <Compile Include="LibratoBufferingClient.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
