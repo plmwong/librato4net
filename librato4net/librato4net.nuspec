@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>https://bitbucket.org/plmw/log4net.raygun</projectUrl>
+    <licenseUrl>http://opensource.org/licenses/mit-license.php</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>
+      Changes:
+      4.0.0 -
+      * Restructured log4net.Raygun into multiple assemblies: log4net.Raygun and log4net.Raygun.Core. The log4net.Raygun.Core assembly only takes a dependency on Mindscape.Raygun4Net.Core, so the classes involved can be used in an MVC or WebApi context.
+      * Removed: .NET Framework 3.5 is no longer supported. This is due to Mindscape.Raygun4Net.Core only being packaged with a net40 assembly.
+      3.2.1 -
+      * Fixed duplication of exception class name when logging messages through the new version of raygun4net.
+      3.2.0 -
+      * Fixed incorrect behaviour where log4net.Raygun would only log the base exception to Raygun, instead of the entire exception chain.
+      3.1.0 -
+      * Updated the version of System.Threading.Tasks used for .NET 3.5 compatibility to the new (unofficial) NuGet package.
+      * The version of log4net.Raygun is now added to the UserCustomData under the 'log4net.Raygun Version' key.
+      3.0.0 -
+      * Updated Raygun4Net version to 4.0.1.
+      * ThrowOnError will now be automatically set to true (as of 4.0.1, RaygunSettings is no longer read-only).
+      2.4.0 -
+      * ThrowOnError is now only required in RaygunSettings when retries are enabled in the log4net.Raygun appender. When using the RaygunSettings configuration section, then throwOnError must be set to true.
+      2.3.0 -
+      * Added configuration property: sendInBackground, which controls whether the raygun message will be sent in a background task. By default this is true.
+      2.2.0 -
+      * Added configuration properties for ignoredFormNames, ignoredHeaderNames, ignoredCookieNames, and ignoredServerVariableNames.
+    </releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>log4net raygun appender</tags>
+    <dependencies>
+      <group>
+        <dependency id="log4net" version="[2.0.2,)" />
+        <dependency id="Mindscape.Raygun4Net" version="[4.2.0,)" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\net40\log4net.Raygun.dll" target="lib\net40\log4net.Raygun.dll" />
+    <file src="bin\Release\net40\log4net.Raygun.pdb" target="lib\net40\log4net.Raygun.pdb" />
+    <file src="bin\Release\net45\log4net.Raygun.dll" target="lib\net45\log4net.Raygun.dll" />
+    <file src="bin\Release\net45\log4net.Raygun.pdb" target="lib\net45\log4net.Raygun.pdb" />
+    <file src="bin\Release\net40\log4net.Raygun.Core.dll" target="lib\net40\log4net.Raygun.dll" />
+    <file src="bin\Release\net40\log4net.Raygun.Core.pdb" target="lib\net40\log4net.Raygun.pdb" />
+    <file src="bin\Release\net45\log4net.Raygun.Core.dll" target="lib\net45\log4net.Raygun.dll" />
+    <file src="bin\Release\net45\log4net.Raygun.Core.pdb" target="lib\net45\log4net.Raygun.pdb" />
+  </files>
+</package>
