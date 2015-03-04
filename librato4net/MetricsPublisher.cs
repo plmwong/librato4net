@@ -34,24 +34,24 @@ namespace librato4net
             }
         }
 
-        internal abstract void Measure(string metricName, object value);
+        internal abstract void Measure(string metricName, object value, string source = null, DateTime? measureTime = null);
 
-        internal TimedContext Time(string metricName)
+        internal TimedContext Time(string metricName, string source = null, DateTime? measureTime = null)
         {
-            return new TimedContext(Current, metricName);
+            return new TimedContext(Current, metricName, source, measureTime);
         }
     }
 
     public static class MetricsPublisherExtensions
     {
-        public static void Measure(this MetricsPublisher publisher, string metricName, object value)
+        public static void Measure(this MetricsPublisher publisher, string metricName, object value, string source = null)
         {
             if (publisher == null) return;
 
             publisher.Measure(metricName.ToLowerInvariant(), value);
         }
 
-        public static IDisposable Time(this MetricsPublisher publisher, string metricName)
+        public static IDisposable Time(this MetricsPublisher publisher, string metricName, string source = null, DateTime? measureTime = null)
         {
             if (publisher == null)
             {

@@ -15,7 +15,7 @@ namespace librato4net.Tests
             {
             }
 
-            mockPublisher.Verify(m => m.Measure("some.metric.name", It.IsAny<long>()));
+            mockPublisher.Verify(m => m.Measure("some.metric.name", It.IsAny<long>(), null, null));
         }
     }
 }

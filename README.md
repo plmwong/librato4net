@@ -15,7 +15,15 @@ MetricsPublisher.Start();
 
 Sending a single measurement:
 ```
-MetricsPublisher.Current.Measure("some.measured.metric", 2745.0f);
+var measuredValue = 3621.0f;
+MetricsPublisher.Current.Measure("some.measured.metric", measuredValue);
+```
+
+You can also specify the source of the measurement (for breakouts and aggregations), and the time when the measurement was taken:
+```
+var measuredValue = 3621.0f;
+var measuredTime = DateTime.UtcNow;
+MetricsPublisher.Current.Measure("some.measured.metric", measuredValue, "sourced-from-this-computer", measuredTime);
 ```
 
 Sending the timing for a code block:
