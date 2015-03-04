@@ -13,12 +13,6 @@ namespace librato4net.Tests
         }
 
         [Test]
-        public void when_publisher_has_not_been_initialised_increment_still_executes()
-        {
-            Assert.DoesNotThrow(() => MetricsPublisherExtensions.Increment(MetricsPublisher.Current, "some.metric.name", It.IsAny<int>()));
-        }
-
-        [Test]
         public void when_publisher_has_not_been_initialised_timing_still_executes()
         {
             Assert.DoesNotThrow(() =>

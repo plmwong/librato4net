@@ -8,7 +8,7 @@ namespace librato4net
 
         public static void Initialise()
         {
-            _publisher = new LibratoMetricsPublisher();
+			_publisher = new LibratoMetricsPublisher(new LibratoClient());
         }
 
         public static MetricsPublisher Current
@@ -20,7 +20,6 @@ namespace librato4net
         }
 
         internal abstract void Measure(string metricName, object value);
-        internal abstract void Increment(string metricName, int @by);
 
         internal TimedContext Time(string metricName)
         {
@@ -35,13 +34,6 @@ namespace librato4net
             if (publisher == null) return;
 
             publisher.Measure(metricName.ToLowerInvariant(), value);
-        }
-
-        public static void Increment(this MetricsPublisher publisher, string metricName, int @by)
-        {
-            if (publisher == null) return;
-
-            publisher.Increment(metricName.ToLowerInvariant(), @by);
         }
 
         public static IDisposable Time(this MetricsPublisher publisher, string metricName)

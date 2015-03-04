@@ -1,15 +1,23 @@
-﻿namespace librato4net
+﻿using librato4net.Metrics;
+using System.Collections.Generic;
+
+namespace librato4net
 {
     public class LibratoMetricsPublisher : MetricsPublisher
     {
+		private readonly ILibratoClient _libratoClient;
+
+		public LibratoMetricsPublisher(ILibratoClient libratoClient)
+		{
+			_libratoClient = libratoClient;
+		}
+
         internal override void Measure(string metricName, object value)
         {
-            throw new System.NotImplementedException();
-        }
+			var gaugeMeasurement = new Gauge { Name = metricName, Value = value };
+			var metric = new Metric { Gauges = new List<Gauge> { gaugeMeasurement } };
 
-        internal override void Increment(string metricName, int @by)
-        {
-            throw new System.NotImplementedException();
+			_libratoClient.SendMetric(metric);
         }
     }
 }

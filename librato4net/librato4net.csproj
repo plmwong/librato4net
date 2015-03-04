@@ -30,6 +30,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -42,7 +43,15 @@
     <Compile Include="MetricsPublisher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimedContext.cs" />
+    <Compile Include="ILibratoClient.cs" />
+    <Compile Include="Metrics\Gauge.cs" />
+    <Compile Include="Metrics\Counter.cs" />
+    <Compile Include="Metrics\Measurement.cs" />
+    <Compile Include="Metrics\Metric.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Metrics\" />
+  </ItemGroup>
 </Project>
