@@ -1,6 +1,8 @@
 librato4net
 ===========
 
+[![Build status](https://ci.appveyor.com/api/projects/status/v7wwdoeevkky7x55/branch/master?svg=true)](https://ci.appveyor.com/project/plmw/librato4net/branch/master)
+
 librato4net is a basic function library for sending metrics from a .NET application to the Librato API.
 
 Usage
