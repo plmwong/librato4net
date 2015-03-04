@@ -23,7 +23,7 @@ Configuration
 ----------
 
 * `username` (required) : The username for accessing your Librato account.
-* `apiKey` (required) : The API key for accessing your Librato account. The API key can be set up under 'Account Settings' / 'All API Tokens' in your Librato account.
+* `apikey` (required) : The API key for accessing your Librato account. The API key can be set up under 'Account Settings' / 'All API Tokens' in your Librato account.
 
 Configuration Example
 ----------------
@@ -35,7 +35,7 @@ Configuration Example
     <section name="LibratoSettings" type="librato4net.LibratoSettings, librato4net"/>
   </configSections>
   ...
-  <LibratoSettings apiKey="YOUR_API_KEY" username="YOUR_USERNAME" />
+  <LibratoSettings apikey="YOUR_API_KEY" username="YOUR_USERNAME" />
   ...
 </configuration>
 ```

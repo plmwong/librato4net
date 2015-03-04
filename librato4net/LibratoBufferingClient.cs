@@ -74,9 +74,9 @@ namespace librato4net
 				{
 					SendMetricsFromQueue();
 				}
-				// Analysis disable once EmptyGeneralCatchClause
-				catch (Exception)
+				catch (Exception ex)
 				{
+					Trace.WriteLine("Exception occurred while sending metrics: " + ex);
 				}
 			}
 		}
