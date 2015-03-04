@@ -18,6 +18,14 @@ namespace librato4net
             _stopwatch.Start();
         }
 
+		public long ElapsedMilliseconds
+		{
+			get 
+			{
+				return _stopwatch.ElapsedMilliseconds;
+			}
+		}
+
         public void Dispose()
         {
             _stopwatch.Stop();
