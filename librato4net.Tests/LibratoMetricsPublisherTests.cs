@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
+﻿using librato4net.Metrics;
 using Moq;
-using librato4net.Metrics;
+using NUnit.Framework;
 
 namespace librato4net.Tests
 {

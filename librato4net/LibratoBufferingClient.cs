@@ -2,6 +2,8 @@
 using System.Collections.Concurrent;
 using librato4net.Metrics;
 using System.Threading;
+using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace librato4net
 {
@@ -11,6 +13,8 @@ namespace librato4net
 		private volatile bool shutDownRequested;
 
 		private static readonly TimeSpan StopTimeout = TimeSpan.FromSeconds(5);
+		private static readonly TimeSpan BatchingInterval = TimeSpan.FromMilliseconds(250);
+		private static readonly TimeSpan SendInterval = TimeSpan.FromSeconds(5);
 
 		private readonly ConcurrentQueue<Metric> _buffer;
 		private readonly ILibratoClient _libratoClient;
@@ -83,7 +87,7 @@ namespace librato4net
 
 			while (!shutDownRequested)
 			{
-				while (!_buffer.TryDequeue(out metric))
+				while (!_buffer.TryPeek(out metric))
 				{
 					Thread.Sleep(20);
 
@@ -93,19 +97,46 @@ namespace librato4net
 					}
 				}
 
-				if (metric != null)
-				{
-					_libratoClient.SendMetric(metric);
+				CombineBufferedMetricsAndSend();
+
+				Thread.Sleep(SendInterval);
+			}
+
+			while (_buffer.TryPeek(out metric))
+			{
+				CombineBufferedMetricsAndSend();
+			}
+		}
+
+		private void CombineBufferedMetricsAndSend() 
+		{
+			var bufferedMetrics = GetBufferedMetrics();
+			var combinedMetric = Metric.CombineAll(bufferedMetrics);
+
+			if (combinedMetric != null)
+			{
+				_libratoClient.SendMetric(combinedMetric);
+			}
+		}
+
+		private Metric[] GetBufferedMetrics()
+		{
+			var batchingStopwatch = new Stopwatch();
+			batchingStopwatch.Start();
+
+			Metric metric;
+			var bufferedMetrics = new List<Metric>();
+
+			while (batchingStopwatch.Elapsed < BatchingInterval) 
+			{
+				if (_buffer.TryDequeue(out metric)) {
+					bufferedMetrics.Add(metric);
 				}
 			}
 
-			while (_buffer.TryDequeue(out metric))
-			{
-				if (metric != null)
-				{
-					_libratoClient.SendMetric(metric);
-				}
-			}
+			batchingStopwatch.Stop();
+
+			return bufferedMetrics.ToArray();
 		}
 
 		public void Dispose()
