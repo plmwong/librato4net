@@ -4,13 +4,27 @@ namespace librato4net
 {
     public abstract class MetricsPublisher
     {
-        private static MetricsPublisher _publisher;
+		private static object _publisherLock = new object();
+		private static MetricsPublisher _publisher;
 
-		static MetricsPublisher()
-        {
-			var client = new LibratoBufferingClient(new LibratoClient());
-			_publisher = new LibratoMetricsPublisher(client);
-        }
+		public static void Start(MetricsPublisher metricsPublisher)
+		{
+			if (_publisher == null)
+			{
+				lock (_publisherLock)
+				{
+					if (_publisher == null)
+					{
+						_publisher = metricsPublisher;
+					}
+				}
+			}
+		}
+
+		public static void Start()
+		{
+			Start(new LibratoMetricsPublisher(new LibratoBufferingClient(new LibratoClient())));
+		}
 
         public static MetricsPublisher Current
         {
