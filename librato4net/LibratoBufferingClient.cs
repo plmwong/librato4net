@@ -9,8 +9,8 @@ namespace librato4net
 {
 	public class LibratoBufferingClient : ILibratoClient, IDisposable
 	{
-		private Thread sendingThread;
-		private volatile bool shutDownRequested;
+		private Thread _sendingThread;
+		private volatile bool _shutDownRequested;
 
 		private static readonly TimeSpan StopTimeout = TimeSpan.FromSeconds(5);
 		private static readonly TimeSpan BatchingInterval = TimeSpan.FromMilliseconds(250);
@@ -19,7 +19,7 @@ namespace librato4net
 		private readonly ConcurrentQueue<Metric> _buffer;
 		private readonly ILibratoClient _libratoClient;
 
-		bool _disposed;
+		private bool _disposed;
 
 		public LibratoBufferingClient(ILibratoClient libratoClient)
 		{
@@ -31,7 +31,7 @@ namespace librato4net
 
 		public void SendMetric(Metric metric)
 		{
-			if (!shutDownRequested && metric != null)
+			if (!_shutDownRequested && metric != null)
 			{
 				_buffer.Enqueue(metric);
 			}
@@ -39,36 +39,36 @@ namespace librato4net
 
 		private void StartSending()
 		{
-			if (shutDownRequested)
+			if (_shutDownRequested)
 			{
 				return;
 			}
 
-			sendingThread =
+			_sendingThread =
 				new Thread(SendingThreadExecute)
 					{
 						Name = String.Format("Librato Metric Forwarding Thread"),
 						IsBackground = false,
 					};
 
-			sendingThread.Start();
+			_sendingThread.Start();
 		}
 
 		private void StopSending()
 		{
-			shutDownRequested = true;
+			_shutDownRequested = true;
 
-			var hasFinishedFlushingBuffer = sendingThread.Join(StopTimeout);
+			var hasFinishedFlushingBuffer = _sendingThread.Join(StopTimeout);
 
 			if (!hasFinishedFlushingBuffer)
 			{
-				sendingThread.Abort();
+				_sendingThread.Abort();
 			}
 		}
 
 		private void SendingThreadExecute()
 		{
-			while (!shutDownRequested)
+			while (!_shutDownRequested)
 			{
 				try
 				{
@@ -85,13 +85,13 @@ namespace librato4net
 		{
 			Metric metric;
 
-			while (!shutDownRequested)
+			while (!_shutDownRequested)
 			{
 				while (!_buffer.TryPeek(out metric))
 				{
 					Thread.Sleep(20);
 
-					if (shutDownRequested)
+					if (_shutDownRequested)
 					{
 						break;
 					}

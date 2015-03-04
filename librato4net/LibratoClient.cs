@@ -1,14 +1,22 @@
 ﻿using librato4net.Metrics;
-using System.Net;
 using Newtonsoft.Json;
+using System;
+using System.Net;
 
 namespace librato4net
 {
 	public class LibratoClient : ILibratoClient
     {
-		public void SendMetric(Metric metric)
+	    private readonly Func<IWebClient> _webClientFactory;
+
+	    public LibratoClient(Func<IWebClient> webClientFactory)
+	    {
+	        _webClientFactory = webClientFactory;
+	    }
+
+	    public void SendMetric(Metric metric)
 		{
-			using (var webClient = new WebClient())
+            using (var webClient = _webClientFactory())
 			{
 				webClient.Credentials = new NetworkCredential(LibratoSettings.Settings.Username, LibratoSettings.Settings.ApiKey);
 

@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EmptyDisposable.cs" />
+    <Compile Include="IWebClient.cs" />
     <Compile Include="LibratoClient.cs" />
     <Compile Include="LibratoMetricsPublisher.cs" />
     <Compile Include="LibratoSettings.cs" />
@@ -49,10 +50,9 @@
     <Compile Include="Metrics\Measurement.cs" />
     <Compile Include="Metrics\Metric.cs" />
     <Compile Include="LibratoBufferingClient.cs" />
+    <Compile Include="WebClientAdapter.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Metrics\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
