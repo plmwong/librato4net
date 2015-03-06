@@ -70,6 +70,13 @@ namespace librato4net
             publisher.Measure(metricName.ToLowerInvariant(), value);
         }
 
+		public static void Increment(this MetricsPublisher publisher, string metricName, long @by = 1)
+		{
+			if (publisher == null) return;
+
+			publisher.Increment(metricName.ToLowerInvariant(), @by);
+		}
+
         public static IDisposable Time(this MetricsPublisher publisher, string metricName)
         {
             if (publisher == null)
