@@ -47,8 +47,16 @@ namespace librato4net
 
 			if (ContainsKey(key))
 			{
+				TValue oldValue;
+				var success = TryGetValue(key, out oldValue);
+
+				if (!success)
+				{
+					throw new InvalidOperationException(string.Format("Could not obtain old value for key '{0}'", key));
+				}
+
 				value = base.AddOrUpdate(key, addValue, updateValueFactory);
-				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, new KeyValuePair<TKey, TValue>(key, value)));
+				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, new KeyValuePair<TKey, TValue>(key, value), new KeyValuePair<TKey, TValue>(key, oldValue)));
 			}
 			else
 			{
@@ -65,8 +73,16 @@ namespace librato4net
 
 			if (ContainsKey(key))
 			{
+				TValue oldValue;
+				var success = TryGetValue(key, out oldValue);
+
+				if (!success)
+				{
+					throw new InvalidOperationException(string.Format("Could not obtain old value for key '{0}'", key));
+				}
+
 				value = base.AddOrUpdate(key, addValueFactory, updateValueFactory);
-				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, new KeyValuePair<TKey, TValue>(key, value)));
+				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, new KeyValuePair<TKey, TValue>(key, value), new KeyValuePair<TKey, TValue>(key, oldValue)));
 			}
 			else
 			{
@@ -141,11 +157,23 @@ namespace librato4net
 
 		public new bool TryUpdate(TKey key, TValue newValue, TValue comparisonValue)
 		{
+			TValue oldValue = default(TValue);
+
+			if (ContainsKey(key))
+			{
+				var success = TryGetValue(key, out oldValue);
+
+				if (!success)
+				{
+					throw new InvalidOperationException(string.Format("Could not obtain old value for key '{0}'", key));
+				}
+			}
+
 			bool tryUpdate;
 
 			if (tryUpdate = base.TryUpdate(key, newValue, comparisonValue)) 
 			{
-				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, new KeyValuePair<TKey, TValue>(key, newValue)));
+				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, new KeyValuePair<TKey, TValue>(key, newValue), new KeyValuePair<TKey, TValue>(key, oldValue)));
 			}
 
 			return tryUpdate;
