@@ -13,7 +13,7 @@ namespace librato4net
 			_libratoClient = libratoClient;
 		}
 
-        internal override void Measure(string metricName, object value, string source = null, DateTime? measureTime = null)
+		internal override void Measure(string metricName, Number value, string source = null, DateTime? measureTime = null)
         {
 			var gaugeMeasurement = new Gauge { Name = metricName, Value = value, Source = source, MeasureTimeValue = measureTime };
 			var metric = new Metric { Gauges = new List<Gauge> { gaugeMeasurement } };

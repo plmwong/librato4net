@@ -53,6 +53,7 @@
     <Compile Include="TimedContextTests.cs" />
     <Compile Include="LibratoMetricsPublisherTests.cs" />
     <Compile Include="LibratoSettingsTests.cs" />
+    <Compile Include="SerialisationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

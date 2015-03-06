@@ -34,7 +34,7 @@ namespace librato4net
             }
         }
 
-        internal abstract void Measure(string metricName, object value, string source = null, DateTime? measureTime = null);
+		internal abstract void Measure(string metricName, Number value, string source = null, DateTime? measureTime = null);
 
         internal TimedContext Time(string metricName, string source = null, DateTime? measureTime = null)
         {
@@ -44,7 +44,7 @@ namespace librato4net
 
     public static class MetricsPublisherExtensions
     {
-        public static void Measure(this MetricsPublisher publisher, string metricName, object value, string source = null)
+		public static void Measure(this MetricsPublisher publisher, string metricName, Number value, string source = null)
         {
             if (publisher == null) return;
 

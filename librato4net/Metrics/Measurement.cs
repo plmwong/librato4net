@@ -9,7 +9,7 @@ namespace librato4net.Metrics
         public string Name { get; set; }
 
         [JsonProperty("value")]
-        public object Value { get; set; }
+		public Number Value { get; set; }
 
         [JsonIgnore]
         public DateTime? MeasureTimeValue { get; set; }
