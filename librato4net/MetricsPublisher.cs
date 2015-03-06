@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace librato4net
 {
@@ -21,9 +21,9 @@ namespace librato4net
 			}
 		}
 
-		public static void Start()
+		public static void Start(string source)
 		{
-			Start(new LibratoMetricsPublisher(new LibratoBufferingClient(new LibratoClient(() => new WebClientAdapter()))));
+			Start(new LibratoMetricsPublisher(new LibratoBufferingClient(new LibratoClient(() => new WebClientAdapter())), source));
 		}
 
         public static MetricsPublisher Current
@@ -34,24 +34,43 @@ namespace librato4net
             }
         }
 
-		internal abstract void Measure(string metricName, Number value, string source = null, DateTime? measureTime = null);
+		protected ObservableConcurrentDictionary<string, long> CurrentCounts { get; private set; }
 
-        internal TimedContext Time(string metricName, string source = null, DateTime? measureTime = null)
+		protected MetricsPublisher() 
+		{
+			CurrentCounts = new ObservableConcurrentDictionary<string, long>();
+			CurrentCounts.CollectionChanged += CountsChanged;
+		}
+
+		protected MetricsPublisher(string source) : this()
+		{
+			Source = source;
+		}
+
+		protected abstract void CountsChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e);
+
+		protected string Source { get; private set; }
+
+		internal abstract void Measure(string metricName, Number value);
+
+		internal abstract void Increment(string metricName);
+
+        internal TimedContext Time(string metricName)
         {
-            return new TimedContext(Current, metricName, source, measureTime);
+			return new TimedContext(Current, metricName);
         }
     }
 
     public static class MetricsPublisherExtensions
     {
-		public static void Measure(this MetricsPublisher publisher, string metricName, Number value, string source = null)
+		public static void Measure(this MetricsPublisher publisher, string metricName, Number value)
         {
             if (publisher == null) return;
 
             publisher.Measure(metricName.ToLowerInvariant(), value);
         }
 
-        public static IDisposable Time(this MetricsPublisher publisher, string metricName, string source = null, DateTime? measureTime = null)
+        public static IDisposable Time(this MetricsPublisher publisher, string metricName)
         {
             if (publisher == null)
             {

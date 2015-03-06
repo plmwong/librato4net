@@ -1,4 +1,4 @@
-﻿using Moq;
+using Moq;
 using NUnit.Framework;
 
 namespace librato4net.Tests
@@ -15,7 +15,7 @@ namespace librato4net.Tests
             {
             }
 
-            mockPublisher.Verify(m => m.Measure("some.metric.name", It.IsAny<Number>(), null, null));
+            mockPublisher.Verify(m => m.Measure("some.metric.name", It.IsAny<Number>()));
         }
     }
 }

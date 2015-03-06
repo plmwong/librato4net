@@ -19,11 +19,9 @@ var measuredValue = 3621.0f;
 MetricsPublisher.Current.Measure("some.measured.metric", measuredValue);
 ```
 
-You can also specify the source of the measurement (for breakouts and aggregations), and the time when the measurement was taken:
+Incrementing a counter (reset when the publisher is created):
 ```
-var measuredValue = 3621.0f;
-var measuredTime = DateTime.UtcNow;
-MetricsPublisher.Current.Measure("some.measured.metric", measuredValue, "sourced-from-this-computer", measuredTime);
+MetricsPublisher.Current.Increment("some.counted.metric");
 ```
 
 Sending the timing for a code block:
