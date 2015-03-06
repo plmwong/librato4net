@@ -53,7 +53,7 @@ namespace librato4net
 
 		internal abstract void Measure(string metricName, Number value);
 
-		internal abstract void Increment(string metricName);
+		internal abstract void Increment(string metricName, long @by = 1);
 
         internal TimedContext Time(string metricName)
         {

@@ -23,9 +23,9 @@ namespace librato4net
 			_libratoClient.SendMetric(metric);
         }
 
-		internal override void Increment(string metricName)
+		internal override void Increment(string metricName, long @by = 1)
 		{
-			CurrentCounts.AddOrUpdate(metricName, 1, (id, count) => count + 1);
+			CurrentCounts.AddOrUpdate(metricName, @by, (id, count) => count + @by);
 		}
 
 		protected override void CountsChanged(object sender, NotifyCollectionChangedEventArgs e)
