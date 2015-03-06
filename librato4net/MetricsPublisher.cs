@@ -21,7 +21,7 @@ namespace librato4net
 			}
 		}
 
-		public static void Start(string source)
+		public static void Start(string source = null)
 		{
 			Start(new LibratoMetricsPublisher(new LibratoBufferingClient(new LibratoClient(() => new WebClientAdapter())), source));
 		}
