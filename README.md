@@ -13,6 +13,11 @@ Call `Start()` to initialise the `MetricsPublisher` and begin the metric sending
 MetricsPublisher.Start();
 ```
 
+Or with a source:
+```
+MetricsPublisher.Start("source-computer");
+```
+
 Sending a single measurement:
 ```
 var measuredValue = 3621.0f;
