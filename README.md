@@ -5,6 +5,11 @@ librato4net
 
 librato4net is a simple library for sending metrics from a .NET application to the Librato API.
 
+Getting
+-----
+librato4net can be obtained via NuGet at https://www.nuget.org/packages/librato4net
+
+
 Usage
 ----
 
@@ -42,6 +47,7 @@ Configuration
 
 * `username` (required) : The username for accessing your Librato account.
 * `apikey` (required) : The API key for accessing your Librato account. The API key can be set up under 'Account Settings' / 'All API Tokens' in your Librato account.
+* `sendInterval` (optional) : TimeSpan of how long to wait between sending batched metric messages to Librato. Defaults to every 5 seconds.
 
 Configuration Example
 ----------------
