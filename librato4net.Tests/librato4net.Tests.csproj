@@ -55,6 +55,7 @@
     <Compile Include="LibratoSettingsTests.cs" />
     <Compile Include="SerialisationTests.cs" />
     <Compile Include="ObservableConcurrentDictionaryTests.cs" />
+    <Compile Include="TestLibratoMetricsPublisher.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

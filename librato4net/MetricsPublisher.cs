@@ -57,7 +57,7 @@ namespace librato4net
 
         internal TimedContext Time(string metricName)
         {
-			return new TimedContext(Current, metricName);
+			return new TimedContext(this, metricName);
         }
     }
 
