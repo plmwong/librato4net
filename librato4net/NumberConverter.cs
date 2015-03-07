@@ -3,46 +3,51 @@ using Newtonsoft.Json;
 
 namespace librato4net
 {
-	public class NumberConverter : JsonConverter
-	{
-		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-		{
-			var number = value as Number;
+    public class NumberConverter : JsonConverter
+    {
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            var number = value as Number;
 
-			if (number.IntegerValue.HasValue)
-			{
-				writer.WriteValue(number.IntegerValue.Value);
-			}
+            if (number == null)
+            {
+                throw new InvalidCastException("Could not cast given value to a Number");
+            }
 
-			if (number.FloatValue.HasValue) 
-			{
-				writer.WriteValue(number.FloatValue);
-			}
-		}
+            if (number.IntegerValue.HasValue)
+            {
+                writer.WriteValue(number.IntegerValue.Value);
+            }
 
-		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-		{
-			var asFloat = existingValue as float?;
+            if (number.FloatValue.HasValue)
+            {
+                writer.WriteValue(number.FloatValue);
+            }
+        }
 
-			if (asFloat != null) 
-			{
-				return new Number(asFloat.Value);
-			}
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            var asFloat = existingValue as float?;
 
-			var asInteger = existingValue as int?;
+            if (asFloat != null)
+            {
+                return new Number(asFloat.Value);
+            }
 
-			if (asInteger != null) 
-			{
-				return new Number(asInteger.Value);
-			}
+            var asInteger = existingValue as int?;
 
-			throw new NotSupportedException();
-		}
+            if (asInteger != null)
+            {
+                return new Number(asInteger.Value);
+            }
 
-		public override bool CanConvert(Type objectType)
-		{
-			return typeof(Number).IsAssignableFrom(objectType);
-		}
-	}
+            throw new NotSupportedException();
+        }
+
+        public override bool CanConvert(Type objectType)
+        {
+            return typeof(Number).IsAssignableFrom(objectType);
+        }
+    }
 }
 

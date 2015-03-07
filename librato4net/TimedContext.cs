@@ -29,7 +29,7 @@ namespace librato4net
         public void Dispose()
         {
             _stopwatch.Stop();
-			_publisher.Measure(_metricName, _stopwatch.ElapsedMilliseconds);
+            _publisher.Measure(_metricName, _stopwatch.ElapsedMilliseconds);
         }
     }
 }

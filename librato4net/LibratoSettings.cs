@@ -37,5 +37,18 @@ namespace librato4net
             get { return (Uri)this["endpoint"]; }
             set { this["endpoint"] = value; }
         }
+
+        [ConfigurationProperty("sendInterval", IsRequired = false, DefaultValue = "00:00:05")]
+        [PositiveTimeSpanValidator]
+        public TimeSpan SendInterval
+        {
+            get { return (TimeSpan)this["sendInterval"]; }
+            set { this["sendInterval"] = value; }
+        }
+
+        public override bool IsReadOnly()
+        {
+            return false;
+        }
     }
 }

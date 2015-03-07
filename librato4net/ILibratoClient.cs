@@ -2,9 +2,9 @@
 
 namespace librato4net
 {
-	public interface ILibratoClient
-	{
-		void SendMetric(Metric metric);
-	}
+    public interface ILibratoClient
+    {
+        void SendMetric(Metric metric);
+    }
 }
 

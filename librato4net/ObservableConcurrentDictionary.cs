@@ -5,189 +5,189 @@ using System.Collections.Generic;
 
 namespace librato4net
 {
-	public sealed class ObservableConcurrentDictionary<TKey, TValue> : ConcurrentDictionary<TKey, TValue>, INotifyCollectionChanged
-	{
-		public ObservableConcurrentDictionary()
-		{ 
-		}
+    public sealed class ObservableConcurrentDictionary<TKey, TValue> : ConcurrentDictionary<TKey, TValue>, INotifyCollectionChanged
+    {
+        public ObservableConcurrentDictionary()
+        {
+        }
 
-		public ObservableConcurrentDictionary(IEnumerable<KeyValuePair<TKey, TValue>> collection)
-			: base(collection)
-		{ 
-		}
+        public ObservableConcurrentDictionary(IEnumerable<KeyValuePair<TKey, TValue>> collection)
+            : base(collection)
+        {
+        }
 
-		public ObservableConcurrentDictionary(IEqualityComparer<TKey> comparer)
-			: base(comparer)
-		{ 
-		}
+        public ObservableConcurrentDictionary(IEqualityComparer<TKey> comparer)
+            : base(comparer)
+        {
+        }
 
-		public ObservableConcurrentDictionary(int concurrencyLevel, int capacity)
-			: base(concurrencyLevel, capacity)
-		{ 
-		}
+        public ObservableConcurrentDictionary(int concurrencyLevel, int capacity)
+            : base(concurrencyLevel, capacity)
+        {
+        }
 
-		public ObservableConcurrentDictionary(IEnumerable<KeyValuePair<TKey, TValue>> collection, IEqualityComparer<TKey> comparer)
-			: base(collection, comparer)
-		{
-		}
+        public ObservableConcurrentDictionary(IEnumerable<KeyValuePair<TKey, TValue>> collection, IEqualityComparer<TKey> comparer)
+            : base(collection, comparer)
+        {
+        }
 
-		public ObservableConcurrentDictionary(int concurrencyLevel, int capacity, IEqualityComparer<TKey> comparer)
-			: base(concurrencyLevel, capacity, comparer)
-		{ 
-		}
+        public ObservableConcurrentDictionary(int concurrencyLevel, int capacity, IEqualityComparer<TKey> comparer)
+            : base(concurrencyLevel, capacity, comparer)
+        {
+        }
 
-		public ObservableConcurrentDictionary(int concurrencyLevel, IEnumerable<KeyValuePair<TKey, TValue>> collection, IEqualityComparer<TKey> comparer)
-			: base(concurrencyLevel, collection, comparer)
-		{
-		}
+        public ObservableConcurrentDictionary(int concurrencyLevel, IEnumerable<KeyValuePair<TKey, TValue>> collection, IEqualityComparer<TKey> comparer)
+            : base(concurrencyLevel, collection, comparer)
+        {
+        }
 
-		public new TValue AddOrUpdate(TKey key, TValue addValue, Func<TKey, TValue, TValue> updateValueFactory)
-		{
-			TValue value;
+        public new TValue AddOrUpdate(TKey key, TValue addValue, Func<TKey, TValue, TValue> updateValueFactory)
+        {
+            TValue value;
 
-			if (ContainsKey(key))
-			{
-				TValue oldValue;
-				var success = TryGetValue(key, out oldValue);
+            if (ContainsKey(key))
+            {
+                TValue oldValue;
+                var success = TryGetValue(key, out oldValue);
 
-				if (!success)
-				{
-					throw new InvalidOperationException(string.Format("Could not obtain old value for key '{0}'", key));
-				}
+                if (!success)
+                {
+                    throw new InvalidOperationException(string.Format("Could not obtain old value for key '{0}'", key));
+                }
 
-				value = base.AddOrUpdate(key, addValue, updateValueFactory);
-				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, new KeyValuePair<TKey, TValue>(key, value), new KeyValuePair<TKey, TValue>(key, oldValue)));
-			}
-			else
-			{
-				value = base.AddOrUpdate(key, addValue, updateValueFactory);
-				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<TKey, TValue>(key, value)));
-			}
+                value = base.AddOrUpdate(key, addValue, updateValueFactory);
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, new KeyValuePair<TKey, TValue>(key, value), new KeyValuePair<TKey, TValue>(key, oldValue)));
+            }
+            else
+            {
+                value = base.AddOrUpdate(key, addValue, updateValueFactory);
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<TKey, TValue>(key, value)));
+            }
 
-			return value;
-		}
+            return value;
+        }
 
-		public new TValue AddOrUpdate(TKey key, Func<TKey, TValue> addValueFactory, Func<TKey, TValue, TValue> updateValueFactory)
-		{
-			TValue value;
+        public new TValue AddOrUpdate(TKey key, Func<TKey, TValue> addValueFactory, Func<TKey, TValue, TValue> updateValueFactory)
+        {
+            TValue value;
 
-			if (ContainsKey(key))
-			{
-				TValue oldValue;
-				var success = TryGetValue(key, out oldValue);
+            if (ContainsKey(key))
+            {
+                TValue oldValue;
+                var success = TryGetValue(key, out oldValue);
 
-				if (!success)
-				{
-					throw new InvalidOperationException(string.Format("Could not obtain old value for key '{0}'", key));
-				}
+                if (!success)
+                {
+                    throw new InvalidOperationException(string.Format("Could not obtain old value for key '{0}'", key));
+                }
 
-				value = base.AddOrUpdate(key, addValueFactory, updateValueFactory);
-				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, new KeyValuePair<TKey, TValue>(key, value), new KeyValuePair<TKey, TValue>(key, oldValue)));
-			}
-			else
-			{
-				value = base.AddOrUpdate(key, addValueFactory, updateValueFactory);
-				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<TKey, TValue>(key, value)));
-			}
+                value = base.AddOrUpdate(key, addValueFactory, updateValueFactory);
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, new KeyValuePair<TKey, TValue>(key, value), new KeyValuePair<TKey, TValue>(key, oldValue)));
+            }
+            else
+            {
+                value = base.AddOrUpdate(key, addValueFactory, updateValueFactory);
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<TKey, TValue>(key, value)));
+            }
 
-			return value;
-		}
+            return value;
+        }
 
-		public new void Clear()
-		{
-			base.Clear();
-			OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-		}
+        public new void Clear()
+        {
+            base.Clear();
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
 
-		public new TValue GetOrAdd(TKey key, Func<TKey, TValue> valueFactory)
-		{
-			TValue value;
+        public new TValue GetOrAdd(TKey key, Func<TKey, TValue> valueFactory)
+        {
+            TValue value;
 
-			if (ContainsKey(key)) 
-			{
-				value = base.GetOrAdd(key, valueFactory);
-			}
-			else
-			{
-				value = base.GetOrAdd(key, valueFactory);
-				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<TKey, TValue>(key, value)));
-			}
+            if (ContainsKey(key))
+            {
+                value = base.GetOrAdd(key, valueFactory);
+            }
+            else
+            {
+                value = base.GetOrAdd(key, valueFactory);
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<TKey, TValue>(key, value)));
+            }
 
-			return value;
-		}
+            return value;
+        }
 
-		public new TValue GetOrAdd(TKey key, TValue value)
-		{
-			if (ContainsKey(key)) 
-			{
-				base.GetOrAdd(key, value);
-			}
-			else
-			{
-				base.GetOrAdd(key, value);
-				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<TKey, TValue>(key, value)));
-			}
+        public new TValue GetOrAdd(TKey key, TValue value)
+        {
+            if (ContainsKey(key))
+            {
+                base.GetOrAdd(key, value);
+            }
+            else
+            {
+                base.GetOrAdd(key, value);
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<TKey, TValue>(key, value)));
+            }
 
-			return value;
-		}
+            return value;
+        }
 
-		public new bool TryAdd(TKey key, TValue value)
-		{
-			bool tryAdd;
+        public new bool TryAdd(TKey key, TValue value)
+        {
+            bool addSuccessful = base.TryAdd(key, value);
 
-			if (tryAdd = base.TryAdd(key, value)) 
-			{
-				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<TKey, TValue>(key, value)));
-			}
+            if (addSuccessful)
+            {
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<TKey, TValue>(key, value)));
+            }
 
-			return tryAdd;
-		}
+            return addSuccessful;
+        }
 
-		public new bool TryRemove(TKey key, out TValue value)
-		{
-			bool tryRemove;
+        public new bool TryRemove(TKey key, out TValue value)
+        {
+            bool removeSuccessful = base.TryRemove(key, out value);
 
-			if (tryRemove = base.TryRemove(key, out value)) 
-			{
-				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, new KeyValuePair<TKey, TValue>(key, value)));
-			}
+            if (removeSuccessful)
+            {
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, new KeyValuePair<TKey, TValue>(key, value)));
+            }
 
-			return tryRemove;
-		}
+            return removeSuccessful;
+        }
 
-		public new bool TryUpdate(TKey key, TValue newValue, TValue comparisonValue)
-		{
-			TValue oldValue = default(TValue);
+        public new bool TryUpdate(TKey key, TValue newValue, TValue comparisonValue)
+        {
+            TValue oldValue = default(TValue);
 
-			if (ContainsKey(key))
-			{
-				var success = TryGetValue(key, out oldValue);
+            if (ContainsKey(key))
+            {
+                var getSuccessful = TryGetValue(key, out oldValue);
 
-				if (!success)
-				{
-					throw new InvalidOperationException(string.Format("Could not obtain old value for key '{0}'", key));
-				}
-			}
+                if (!getSuccessful)
+                {
+                    throw new InvalidOperationException(string.Format("Could not obtain old value for key '{0}'", key));
+                }
+            }
 
-			bool tryUpdate;
+            bool updateSuccessful = base.TryUpdate(key, newValue, comparisonValue);
 
-			if (tryUpdate = base.TryUpdate(key, newValue, comparisonValue)) 
-			{
-				OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, new KeyValuePair<TKey, TValue>(key, newValue), new KeyValuePair<TKey, TValue>(key, oldValue)));
-			}
+            if (updateSuccessful)
+            {
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, new KeyValuePair<TKey, TValue>(key, newValue), new KeyValuePair<TKey, TValue>(key, oldValue)));
+            }
 
-			return tryUpdate;
-		}
+            return updateSuccessful;
+        }
 
-		private void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
-		{
-			if (CollectionChanged != null) 
-			{
-				CollectionChanged(this, e);
-			}
-		}
+        private void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+        {
+            if (CollectionChanged != null)
+            {
+                CollectionChanged(this, e);
+            }
+        }
 
-		public event NotifyCollectionChangedEventHandler CollectionChanged;
-	}
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
+    }
 }
 
