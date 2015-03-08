@@ -11,10 +11,10 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>
-      Changes:
+Changes:
       1.0.0 - First release
     </releaseNotes>
-    <copyright>Copyright 2015</copyright>
+    <copyright>Copyright $author$ 2015</copyright>
     <tags>librato metrics metric measurements</tags>
     <dependencies>
       <group>
