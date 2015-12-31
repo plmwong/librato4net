@@ -44,9 +44,8 @@ namespace librato4net
             return dateTime.AddSeconds(unixTime);
         }
 
-        private static Int64 ToUnixTime(DateTime dateTime)
+        private static long ToUnixTime(DateTime dateTime)
         {
-
             if (dateTime == DateTime.MinValue)
             {
                 return 0;
