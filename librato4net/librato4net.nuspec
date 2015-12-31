@@ -11,7 +11,8 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>
-Changes:
+      Changes:
+      1.1.0 - Added support for Librato Annotations
       1.0.0 - First release
     </releaseNotes>
     <copyright>Copyright $author$ 2015</copyright>

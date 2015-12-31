@@ -1,7 +1,9 @@
-﻿using NUnit.Framework;
-using Newtonsoft.Json;
-using librato4net.Metrics;
+﻿using System;
 using System.Collections.Generic;
+using librato4net.Annotations;
+using librato4net.Metrics;
+using Newtonsoft.Json;
+using NUnit.Framework;
 
 namespace librato4net.Tests
 {
@@ -21,14 +23,9 @@ namespace librato4net.Tests
             Assert.That(json, Is.EqualTo(@"{""gauges"":[{""name"":""some.metric.name"",""value"":-56,""source"":""some-source""}]}"));
         }
 
-        public string Serialise(Metric metric)
+        private string Serialise<T>(T payload)
         {
-            var jsonConfig = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore
-            };
-
-            var jsonData = JsonConvert.SerializeObject(metric, jsonConfig);
+            var jsonData = JsonConvert.SerializeObject(payload, LibratoJson.Settings);
 
             return jsonData;
         }
@@ -44,6 +41,20 @@ namespace librato4net.Tests
             var json = Serialise(metricWithCounter);
 
             Assert.That(json, Is.EqualTo(@"{""counters"":[{""name"":""some.metric.name"",""value"":12345.67,""source"":""some-source""}]}"));
+        }
+
+        [Test]
+        public void annotation_serialises_as_expected()
+        {
+            var fullAnnotation = new Annotation
+            {
+                    Type = "some.type", Title = "some.title", Description = "some.description",
+                    Source = "some.source", StartTime = new DateTime(2015, 12, 12), EndTime = null  
+            };
+
+            var json = Serialise(fullAnnotation);
+
+            Assert.That(json, Is.EqualTo(@"{""source"":""some.source"",""title"":""some.title"",""description"":""some.description"",""start_time"":1449878400}"));
         }
     }
 }

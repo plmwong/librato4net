@@ -3,6 +3,7 @@ using librato4net.Metrics;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using librato4net.Annotations;
 
 namespace librato4net
 {
@@ -14,6 +15,20 @@ namespace librato4net
             : base(source)
         {
             _libratoClient = libratoClient;
+        }
+
+        internal override void Annotate(string type, string title, string description, DateTime? startTime, DateTime? endTime)
+        {
+            var annotation = new Annotation
+            {
+                Type = type,
+                Title = title,
+                Description = description,
+                StartTime = startTime,
+                EndTime = endTime
+            };
+            
+            _libratoClient.SendAnnotation(annotation);
         }
 
         internal override void Measure(string metricName, Number value)

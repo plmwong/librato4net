@@ -42,6 +42,11 @@ using (MetricsPublisher.Current.Time("some.timed.metric"))
 }
 ```
 
+Sending annotations (events) to mark when things happen:
+```
+MetricsPublisher.Current.Annotate("important-things", "an important thing happened!");
+```
+
 Configuration
 ----------
 

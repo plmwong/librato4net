@@ -1,7 +1,8 @@
-﻿using librato4net.Metrics;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Net;
+using librato4net.Annotations;
+using librato4net.Metrics;
+using Newtonsoft.Json;
 
 namespace librato4net
 {
@@ -16,20 +17,25 @@ namespace librato4net
 
         public void SendMetric(Metric metric)
         {
+            Send(metric, "metrics");
+        }
+
+        public void SendAnnotation(Annotation annotation)
+        {
+            Send(annotation, string.Format("annotations/{0}", annotation.Type));
+        }
+
+        private void Send<T>(T payload, string resource)
+        {
             using (var webClient = _webClientFactory())
             {
                 webClient.Credentials = new NetworkCredential(LibratoSettings.Settings.Username, LibratoSettings.Settings.ApiKey);
 
                 webClient.Headers.Add(HttpRequestHeader.ContentType, "application/json");
 
-                var jsonConfig = new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore
-                };
+                var jsonData = JsonConvert.SerializeObject(payload, LibratoJson.Settings);
 
-                var jsonData = JsonConvert.SerializeObject(metric, jsonConfig);
-
-                webClient.UploadString(LibratoSettings.Settings.ApiEndpoint.AbsoluteUri, jsonData);
+                webClient.UploadString(LibratoSettings.Settings.ApiEndpoint.AbsoluteUri + resource, jsonData);
             }
         }
     }

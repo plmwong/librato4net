@@ -8,7 +8,7 @@ namespace librato4net
         // ReSharper disable once InconsistentNaming
         private static readonly LibratoSettings settings = ConfigurationManager.GetSection("LibratoSettings") as LibratoSettings ?? new LibratoSettings();
 
-        private const string DefaultApiEndPoint = "https://metrics-api.librato.com/v1/metrics";
+        private const string DefaultApiEndPoint = "https://metrics-api.librato.com/v1/";
 
         public static LibratoSettings Settings
         {

@@ -1,4 +1,5 @@
-﻿using librato4net.Metrics;
+﻿using librato4net.Annotations;
+using librato4net.Metrics;
 using Moq;
 using NUnit.Framework;
 
@@ -51,6 +52,17 @@ namespace librato4net.Tests
             }
 
             libratoClient.Verify(m => m.SendMetric(It.IsAny<Metric>()), Times.Once);
+        }
+
+        [Test]
+        public void when_annotate_is_called_then_an_annotation_is_sent()
+        {
+            var libratoClient = new Mock<ILibratoClient>();
+            var publisher = new LibratoMetricsPublisher(libratoClient.Object);
+
+            publisher.Annotate("some.annotation.name", It.IsAny<string>());
+
+            libratoClient.Verify(m => m.SendAnnotation(It.IsAny<Annotation>()), Times.Once);
         }
     }
 }

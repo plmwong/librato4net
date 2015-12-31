@@ -79,6 +79,10 @@
     <Compile Include="Number.cs" />
     <Compile Include="ObservableConcurrentDictionary.cs" />
     <Compile Include="NumberConverter.cs" />
+    <Compile Include="Annotations\Annotation.cs" />
+    <Compile Include="Annotations\Link.cs" />
+    <Compile Include="UnixDateTimeConverter.cs" />
+    <Compile Include="LibratoJson.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -104,4 +108,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <ItemGroup>
+    <Folder Include="Annotations\" />
+  </ItemGroup>
 </Project>

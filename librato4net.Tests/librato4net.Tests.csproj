@@ -57,6 +57,7 @@
     <Compile Include="ObservableConcurrentDictionaryTests.cs" />
     <Compile Include="TestLibratoMetricsPublisher.cs" />
     <Compile Include="NumberTests.cs" />
+    <Compile Include="UnixDateTimeConverterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
