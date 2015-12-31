@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using librato4net.Metrics;
-using System.Threading;
-using System.Diagnostics;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
+using librato4net.Annotations;
+using librato4net.Metrics;
 
 namespace librato4net
 {
@@ -33,6 +34,14 @@ namespace librato4net
             if (!_shutDownRequested && metric != null)
             {
                 _buffer.Enqueue(metric);
+            }
+        }
+
+        public void SendAnnotation(Annotation annotation)
+        {
+            if (!_shutDownRequested && annotation != null)
+            {
+                _libratoClient.SendAnnotation(annotation);
             }
         }
 

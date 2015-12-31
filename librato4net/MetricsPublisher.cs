@@ -52,6 +52,8 @@ namespace librato4net
 
         protected string Source { get; private set; }
 
+        internal abstract void Annotate(string type, string title, string description, DateTime? startTime, DateTime? endTime);
+
         internal abstract void Measure(string metricName, Number value);
 
         internal abstract void Increment(string metricName, long @by = 1);
@@ -64,6 +66,13 @@ namespace librato4net
 
     public static class MetricsPublisherExtensions
     {
+        public static void Annotate(this MetricsPublisher publisher, string type, string title, string description = null, DateTime? startTime = null, DateTime? endTime = null)
+        {
+            if (publisher == null) return;
+
+            publisher.Annotate(type, title, description, startTime, endTime);
+        }
+        
         public static void Measure(this MetricsPublisher publisher, string metricName, Number value)
         {
             if (publisher == null) return;
