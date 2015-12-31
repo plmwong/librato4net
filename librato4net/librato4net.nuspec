@@ -12,6 +12,7 @@
     <description>$description$</description>
     <releaseNotes>
       Changes:
+      1.1.0 - Added support for Librato Annotations
       1.0.0 - First release
     </releaseNotes>
     <copyright>Copyright 2015</copyright>
