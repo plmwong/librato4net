@@ -81,6 +81,7 @@
     <Compile Include="NumberConverter.cs" />
     <Compile Include="Annotations\Annotation.cs" />
     <Compile Include="Annotations\Link.cs" />
+    <Compile Include="UnixDateTimeConverter.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

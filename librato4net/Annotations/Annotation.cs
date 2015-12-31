@@ -6,6 +6,7 @@ namespace librato4net.Annotations
 {
     public class Annotation
     {
+        [JsonIgnore]
         public string Type { get; set; }
 
         [JsonProperty("source")]

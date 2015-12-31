@@ -36,9 +36,10 @@ namespace librato4net
 
                 var jsonConfig = new JsonSerializerSettings
                 {
-                    NullValueHandling = NullValueHandling.Ignore
+                    NullValueHandling = NullValueHandling.Ignore,
+                    Converters = new[] { new UnixDateTimeConverter() }
                 };
-
+                
                 var jsonData = JsonConvert.SerializeObject(payload, jsonConfig);
 
                 webClient.UploadString(LibratoSettings.Settings.ApiEndpoint.AbsoluteUri + resource, jsonData);
