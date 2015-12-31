@@ -22,7 +22,6 @@ namespace librato4net
 
         public void SendAnnotation(Annotation annotation)
         {
-
             Send(annotation, string.Format("annotations/{0}", annotation.Type));
         }
 
@@ -34,13 +33,7 @@ namespace librato4net
 
                 webClient.Headers.Add(HttpRequestHeader.ContentType, "application/json");
 
-                var jsonConfig = new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore,
-                    Converters = new[] { new UnixDateTimeConverter() }
-                };
-                
-                var jsonData = JsonConvert.SerializeObject(payload, jsonConfig);
+                var jsonData = JsonConvert.SerializeObject(payload, LibratoJson.Settings);
 
                 webClient.UploadString(LibratoSettings.Settings.ApiEndpoint.AbsoluteUri + resource, jsonData);
             }
