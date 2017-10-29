@@ -17,12 +17,32 @@ namespace librato4net
 
         public string Username
         {
-            get { return ConfigurationManager.AppSettings["Librato.Username"]; }
+            get
+            {
+                var username = ConfigurationManager.AppSettings["Librato.Username"];
+
+                if (string.IsNullOrEmpty(username))
+                {
+                    throw new ConfigurationErrorsException("Librato.Username is required and cannot be empty");
+                }
+
+                return username;
+            }
         }
 
         public string ApiKey
         {
-            get { return ConfigurationManager.AppSettings["Librato.ApiKey"]; }
+            get
+            {
+                var apiKey = ConfigurationManager.AppSettings["Librato.ApiKey"];
+
+                if (string.IsNullOrEmpty(apiKey))
+                {
+                    throw new ConfigurationErrorsException("Librato.ApiKey is required and cannot be empty");
+                }
+
+                return apiKey;
+            }
         }
 
         public Uri ApiEndpoint
