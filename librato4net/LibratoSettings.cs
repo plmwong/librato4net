@@ -3,7 +3,7 @@ using System.Configuration;
 
 namespace librato4net
 {
-    public class LibratoSettings : ConfigurationSection
+    public class LibratoSettings : ConfigurationSection, ILibratoSettings
     {
         // ReSharper disable once InconsistentNaming
         private static readonly LibratoSettings settings = ConfigurationManager.GetSection("LibratoSettings") as LibratoSettings ?? new LibratoSettings();

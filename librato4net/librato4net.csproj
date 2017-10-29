@@ -83,6 +83,9 @@
     <Compile Include="Annotations\Link.cs" />
     <Compile Include="UnixDateTimeConverter.cs" />
     <Compile Include="LibratoJson.cs" />
+    <Compile Include="AppSettingsLibratoSettings.cs" />
+    <Compile Include="ILibratoSettings.cs" />
+    <Compile Include="SettingsSource.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
