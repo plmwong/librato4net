@@ -18,13 +18,15 @@ namespace librato4net
 
         private readonly ConcurrentQueue<Metric> _buffer;
         private readonly ILibratoClient _libratoClient;
+        private readonly ILibratoSettings _settings;
 
         private bool _disposed;
 
-        public LibratoBufferingClient(ILibratoClient libratoClient)
+        public LibratoBufferingClient(ILibratoClient libratoClient, ILibratoSettings settings)
         {
             _buffer = new ConcurrentQueue<Metric>();
             _libratoClient = libratoClient;
+            _settings = settings;
 
             StartSending();
         }
@@ -107,7 +109,7 @@ namespace librato4net
 
                 CombineBufferedMetricsAndSend();
 
-                Thread.Sleep(LibratoSettings.Settings.SendInterval);
+                Thread.Sleep(_settings.SendInterval);
             }
 
             while (_buffer.TryPeek(out metric))

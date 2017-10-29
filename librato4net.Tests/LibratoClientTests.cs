@@ -15,7 +15,7 @@ namespace librato4net.Tests
             var mockWebClient = new Mock<IWebClient>();
             mockWebClient.Setup(m => m.Headers).Returns(new WebHeaderCollection());
 
-            var client = new LibratoClient(() => mockWebClient.Object);
+            var client = new LibratoClient(() => mockWebClient.Object, LibratoSettings.Settings);
 
             client.SendMetric(It.IsAny<Metric>());
 
@@ -28,7 +28,7 @@ namespace librato4net.Tests
             var mockWebClient = new Mock<IWebClient>();
             mockWebClient.Setup(m => m.Headers).Returns(new WebHeaderCollection());
 
-            var client = new LibratoClient(() => mockWebClient.Object);
+            var client = new LibratoClient(() => mockWebClient.Object, LibratoSettings.Settings);
 
             client.SendAnnotation(new Annotation { Type = "some.type" });
 

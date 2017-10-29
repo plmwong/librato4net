@@ -21,9 +21,20 @@ namespace librato4net
             }
         }
 
-        public static void Start(string source = null)
+        public static void Start(string source = null, SettingsSource settingsSource = SettingsSource.Default)
         {
-            Start(new LibratoMetricsPublisher(new LibratoBufferingClient(new LibratoClient(() => new WebClientAdapter())), source));
+            ILibratoSettings settings;
+            
+            if (settingsSource == SettingsSource.AppSettings)
+            {
+                settings = new AppSettingsLibratoSettings();
+            } 
+            else 
+            {
+                settings = LibratoSettings.Settings;
+            }
+
+            Start(new LibratoMetricsPublisher(new LibratoBufferingClient(new LibratoClient(() => new WebClientAdapter(), settings), settings), source));
         }
 
         public static MetricsPublisher Current

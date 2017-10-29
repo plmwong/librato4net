@@ -9,10 +9,12 @@ namespace librato4net
     public class LibratoClient : ILibratoClient
     {
         private readonly Func<IWebClient> _webClientFactory;
+        private readonly ILibratoSettings _settings;
 
-        public LibratoClient(Func<IWebClient> webClientFactory)
+        public LibratoClient(Func<IWebClient> webClientFactory, ILibratoSettings settings)
         {
             _webClientFactory = webClientFactory;
+            _settings = settings;
         }
 
         public void SendMetric(Metric metric)
@@ -29,13 +31,13 @@ namespace librato4net
         {
             using (var webClient = _webClientFactory())
             {
-                webClient.Credentials = new NetworkCredential(LibratoSettings.Settings.Username, LibratoSettings.Settings.ApiKey);
+                webClient.Credentials = new NetworkCredential(_settings.Username, _settings.ApiKey);
 
                 webClient.Headers.Add(HttpRequestHeader.ContentType, "application/json");
 
                 var jsonData = JsonConvert.SerializeObject(payload, LibratoJson.Settings);
 
-                webClient.UploadString(LibratoSettings.Settings.ApiEndpoint.AbsoluteUri + resource, jsonData);
+                webClient.UploadString(_settings.ApiEndpoint.AbsoluteUri + resource, jsonData);
             }
         }
     }
