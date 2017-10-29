@@ -50,9 +50,16 @@ MetricsPublisher.Current.Annotate("important-things", "an important thing happen
 Configuration
 ----------
 
+Configuration by default can be supplied through the `LibratoSettings` configuration section, by supplying
+any of the following element attributes:
+
 * `username` (required) : The username for accessing your Librato account.
 * `apikey` (required) : The API key for accessing your Librato account. The API key can be set up under 'Account Settings' / 'All API Tokens' in your Librato account.
 * `sendInterval` (optional) : TimeSpan of how long to wait between sending batched metric messages to Librato. Defaults to every 5 seconds.
+
+Alternatively, you may supply settings through the `appSettings` instead. Instead of calling `MetricsPublisher.Start()`, you will have to call 
+`MetricsPublisher.Start(settingsSource: SettingsSource.AppSettings)` instead for initialisation. The equivalent `appSettings` keys
+are `Librato.Username`, `Librato.ApiKey` and `Librato.SendInterval`.
 
 Configuration Example
 ----------------
@@ -65,6 +72,18 @@ Configuration Example
   </configSections>
   ...
   <LibratoSettings apikey="YOUR_API_KEY" username="YOUR_USERNAME" />
+  ...
+</configuration>
+```
+
+```
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  ...
+  <appSettings>
+    <add key="Librato.Username" value="YOUR_USERNAME" />
+    <add key="Librato.ApiKey" value="YOUR_API_KEY" />
+  </appSettings>
   ...
 </configuration>
 ```
