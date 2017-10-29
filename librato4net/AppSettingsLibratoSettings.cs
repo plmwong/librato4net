@@ -5,14 +5,12 @@ namespace librato4net
 {
     public class AppSettingsLibratoSettings : ILibratoSettings
     {
-        // ReSharper disable once InconsistentNaming
-        private static readonly AppSettingsLibratoSettings settings = new AppSettingsLibratoSettings();
-
         private const string DefaultApiEndPoint = "https://metrics-api.librato.com/v1/";
 
-        public static AppSettingsLibratoSettings Settings
+        public AppSettingsLibratoSettings()
         {
-            get { return settings; }
+            var _ = Username;
+            _ = ApiKey;
         }
 
         public string Username
