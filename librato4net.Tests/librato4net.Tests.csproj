@@ -58,6 +58,7 @@
     <Compile Include="TestLibratoMetricsPublisher.cs" />
     <Compile Include="NumberTests.cs" />
     <Compile Include="UnixDateTimeConverterTests.cs" />
+    <Compile Include="AppSettingsLibratoSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
