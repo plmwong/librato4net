@@ -12,6 +12,7 @@
     <description>$description$</description>
     <releaseNotes>
       Changes:
+      1.2.0 - Added support for reading configuration settings from AppSettings
       1.1.0 - Added support for Librato Annotations
       1.0.0 - First release
     </releaseNotes>
